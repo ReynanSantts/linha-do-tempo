@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Linha do Tempo</title>
+    <style>
+        :root {
+            --bg: #0f1724;
+            --card: #0b1220;
+            --accent: #06b6d4;
+            --muted: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.03);
+            --radius: 12px;
+            --maxw: 1100px;
+            color-scheme: dark;
+            font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(180deg, #071023 0%, #071428 100%);
+            color: #e6eef6;
+            -webkit-font-smoothing: antialiased;
+            padding: 32px;
+        }
+
+        .container {
+            max-width: var(--maxw);
+            margin: 0 auto
+        }
+
+        header {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px
+        }
+
+        h1 {
+            font-size: 20px;
+            margin: 0
+        }
+
+        .controls {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+
+        input[type=text],
+        select {
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--muted);
+            padding: 8px 10px;
+            border-radius: 8px
+        }
+
+        button {
+            background: var(--accent);
+            border: none;
+            color: #042027;
+            padding: 8px 12px;
+            border-radius: 10px;
+            cursor: pointer
+        }
+
+        .timeline {
+            position: relative;
+            padding: 24px 12px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.03)
+        }
+
+        /* Vertical layout */
+        .events {
+            display: flex;
+            flex-direction: column;
+            gap: 18px
+        }
+
+        .event {
+            display: grid;
+            grid-template-columns: 70px 1fr;
+            gap: 12px;
+            align-items: start
+        }
+
+        .event .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent);
+            margin-top: 6px
+        }
+
+        .event .date {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.03)
+        }
+
+        .card h3 {
+            margin: 0 0 6px 0;
+            font-size: 16px
+        }
+
+        .card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        /* Horizontal variant */
+        .horizontal .events {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            overflow: auto;
+            padding-bottom: 8px
+        }
+
+        .horizontal .event {
+            min-width: 220px;
+            grid-template-columns: 1fr;
+        }
+
+        .horizontal .dot {
+            margin: 8px 0
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(2, 6, 23, 0.6);
+            visibility: hidden;
+            opacity: 0;
+            transition: all .18s ease
+        }
+
+        .modal.open {
+            visibility: visible;
+            opacity: 1
+        }
+
+        .modal .inner {
+            background: var(--card);
+            padding: 18px;
+            border-radius: 14px;
+            width: min(880px, 94%);
+            max-height: 86vh;
+            overflow: auto;
+            border: 1px solid rgba(255, 255, 255, 0.04)
+        }
+
+        .modal .close {
+            float: right;
+            background: transparent;
+            border: 0;
+            color: var(--muted);
+            cursor: pointer
+        }
+
+        .empty {
+            padding: 36px;
+            text-align: center;
+            color: var(--muted)
+        }
+
+        @media (max-width:640px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px
+            }
+
+            .event {
+                grid-template-columns: 56px 1fr
+            }
+
+            .controls {
+                width: 100%;
+                gap: 6px
+            }
+        }
+
+        .card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .event img {
+            width: 200px;
+            height: 120px;
+            object-fit: contain;
+            background-color: #f0f0f0;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Linha do Tempo — Template</h1>
+                <small style="color:var(--muted)">Template interativo</small>
+            </div>
+
+            <div class="controls">
+                <input id="search" type="text" placeholder="Buscar (palavra, ano...)" />
+                <select id="viewSelect" title="Modo de visualização">
+                    <option value="vertical">Vertical</option>
+                    <option value="horizontal">Horizontal</option>
+                </select>
+                <select id="yearFilter">
+                    <option value="all">Todos os anos</option>
+                </select>
+            </div>
+        </header>
+
+        <main class="timeline" id="timeline">
+            <div id="events" class="events"></div>
+            <div id="empty" class="empty" style="display:none">Nenhum evento encontrado. Tente outra busca.</div>
+        </main>
+    </div>
+
+    <!-- Modal de detalhes -->
+    <div id="modal" class="modal" role="dialog" aria-hidden="true">
+        <div class="inner">
+            <button class="close" id="closeModal">Fechar ✕</button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const events = [
+            {
+                img: 'images/capitaniashereditariasmapaatualizado-0-cke.jpg',
+                date: '1534-01-01',
+                title: 'Capitanias Hereditárias',
+                subtitle: 'Sistema de doação de terras pela Coroa Portuguesa a donatários, concentrando grandes extensões de terra em poucas mãos e criando desigualdade fundiária inicial',
+                content: 'Iniciada em 1534, concentrou vastos territórios nas mãos de poucos donatários, moldando a posse de terra no Brasil e estabelecendo um padrão de desigualdade fundiária que persiste até hoje.',
+            },
+            {
+                date: '1549-01-01',
+                title: 'Implantação do Governo-Geral',
+                subtitle: 'Centralização do poder da Coroa sobre as capitanias, limitando autonomia dos donatários e fortalecendo a presença administrativa portuguesa',
+                content: 'O Governo-Geral reforçou o controle da Coroa sobre as capitanias e a distribuição de terras, limitando a autonomia dos donatários.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/5/53/Pedro_Alvares_Cabral.jpg'
+            },
+            {
+                date: '1822-09-07',
+                title: 'Independência do Brasil',
+                subtitle: 'Apesar de romper com Portugal, a independência manteve a concentração de terras nas elites agrárias, sem reforma agrária efetiva',
+                content: 'Apesar da independência, manteve-se a estrutura agrária excludente, perpetuando privilégios das elites rurais.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/4/44/Independencia_Brasil.jpg'
+            },
+            {
+                date: '1850-09-18',
+                title: 'Lei de Terras',
+                subtitle: 'Estabelece que acesso à terra só seria possível por compra, excluindo pobres, indígenas e ex-escravizados, consolidando a concentração fundiária',
+                content: 'Determinou que apenas pela compra seria possível ter posse da terra, excluindo pobres, indígenas e ex-escravizados, consolidando a concentração fundiária.',
+                img: 'https://brasilescola.uol.com.br/upload/conteudo/2020/01/lei-de-terras-1850.jpg'
+            },
+            {
+                date: '1888-05-13',
+                title: 'Abolição da Escravidão',
+                subtitle: 'Libertação sem acesso à terra, mantendo a desigualdade fundiária e consolidando o poder dos grandes proprietários',
+                content: 'Milhões de ex-escravizados ficaram sem acesso à terra, ampliando a desigualdade fundiária e reforçando o poder dos grandes proprietários.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/5/55/Lei_Aurea.jpg'
+            },
+            {
+                date: '1934-07-16',
+                title: 'Constituição de 1934',
+                subtitle: 'Primeira Constituição a mencionar a função social da propriedade, ainda de forma limitada, sem mecanismos de aplicação efetiva',
+                content: 'Essa Constituição inovou ao introduzir o conceito de função social da propriedade, mas sem instrumentos eficazes de aplicação.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/d/d6/Constituicao_Brasileira_1934.jpg'
+            },
+            {
+                date: '1945-01-01',
+                title: 'Colonização agrícola',
+                subtitle: 'Projetos de incentivo à ocupação agrícola no Sul e interior do Brasil, muitas vezes em áreas indígenas, gerando conflitos e deslocamentos populacionais',
+                content: 'Políticas públicas incentivaram a colonização em áreas indígenas, reforçando conflitos e deslocamentos populacionais.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/f/f0/Colonizacao_Agricola_Brasil.jpg'
+            },
+            {
+                date: '1964-11-30',
+                title: 'Estatuto da Terra',
+                subtitle: 'Base legal para a reforma agrária, prevendo função social da terra, mas com aplicação limitada pelo regime militar',
+                content: 'Prevê a função social da terra e a reforma agrária, mas teve aplicação limitada, servindo mais como instrumento político do regime.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/9/95/Estatuto_da_Terra.jpg'
+            },
+            {
+                date: '1970-01-01',
+                title: 'Programa de Integração Nacional (PIN)',
+                subtitle: 'Colonização da Amazônia com incentivo a grandes proprietários e empresas, gerando conflitos territoriais e impactos ambientais',
+                content: 'Favoreceu grandes proprietários e empresas, gerando intensos conflitos territoriais e impactos ambientais.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Amazonia.jpg'
+            },
+            {
+                date: '1984-01-01',
+                title: 'Fundação do MST',
+                subtitle: 'Criação do Movimento dos Trabalhadores Rurais Sem Terra, lutando pela reforma agrária e pelo acesso à terra',
+                content: 'O MST passou a protagonizar ocupações e lutas pela reforma agrária, denunciando a concentração fundiária e exigindo justiça social.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/8/82/MST_protest.jpg'
+            },
+            {
+                date: '1985-01-01',
+                title: 'Criação do INCRA',
+                subtitle: 'Instituto Nacional de Colonização e Reforma Agrária, responsável pela execução da reforma agrária e administração de terras públicas',
+                content: 'Órgão responsável por administrar terras públicas e implementar a reforma agrária, central nas políticas fundiárias.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/7/78/INCRA_Brasil.jpg'
+            },
+            {
+                date: '1988-10-05',
+                title: 'Constituição de 1988',
+                subtitle: 'Consolidação da função social da propriedade, assegurando direitos territoriais a indígenas, quilombolas e assentamentos rurais',
+                content: 'Assegura direitos territoriais e consolida o princípio da função social da propriedade, incluindo direitos de indígenas e quilombolas.',
+                img: 'https://www.otempo.com.br/politica/veja-fotos-historicas-da-promulgacao-da-constituicao-de-1988-1.3247735'
+            },
+            {
+                date: '1996-04-17',
+                title: 'Massacre de Eldorado dos Carajás',
+                subtitle: 'Violência contra trabalhadores sem-terra, símbolo da criminalização das lutas sociais por terra',
+                content: 'Símbolo da criminalização das lutas sociais por terra, 19 trabalhadores sem-terra foram assassinados pela polícia no Pará.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/2/2a/Massacre_Eldorado_dos_Carajas.jpg'
+            },
+            {
+                date: '2003-01-01',
+                title: 'Criação do MDA',
+                subtitle: 'Ministério do Desenvolvimento Agrário, fortalecendo a agricultura familiar e assentamentos rurais',
+                content: 'Formulou políticas voltadas para pequenos agricultores, assentamentos e comunidades tradicionais.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/6/63/MDA_Brasil.jpg'
+            },
+            {
+                date: '2010-01-01',
+                title: 'Demarcações de terras',
+                subtitle: 'Avanços no reconhecimento de territórios indígenas e quilombolas, consolidando direitos de povos tradicionais',
+                content: 'O período foi marcado por demarcações importantes e pela consolidação de direitos de povos tradicionais.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Terra_Indigena_Brasil.jpg'
+            },
+            {
+                date: '2017-01-01',
+                title: 'Retrocessos nas demarcações',
+                subtitle: 'Disputas judiciais e políticas contra terras indígenas e quilombolas, ameaçando direitos conquistados',
+                content: 'O STF e o Congresso passaram a ser palco de disputas que ameaçam os direitos conquistados pelos povos tradicionais.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/e/e0/Indigenous_protest.jpg'
+            },
+            {
+                date: '2020-01-01',
+                title: 'Conflitos e agronegócio',
+                subtitle: 'Ascensão do agronegócio domina a agenda política e econômica, gerando disputas fundiárias e ambientais',
+                content: 'O agronegócio domina a agenda política e econômica, enquanto crescem os conflitos fundiários e ambientais.',
+                img: 'https://agenciabrasil.ebc.com.br/sites/default/files/styles/teaser_publicacao/public/2020-01/agronegocio.jpg'
+            },
+            {
+                date: '2021-05-01',
+                title: 'Conflitos em terras indígenas',
+                subtitle: 'Aumento de invasões de grileiros e madeireiros ilegais, intensificando disputas territoriais',
+                content: 'O avanço de grileiros e madeireiros ilegais intensificou disputas em territórios indígenas.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/9/97/Conflito_Indigena.jpg'
+            },
+            {
+                date: '2022-08-01',
+                title: 'Debates sobre reforma agrária',
+                subtitle: 'Pressão contínua de movimentos sociais, como MST, por políticas de redistribuição de terra, apesar de resistências políticas',
+                content: 'O MST e organizações sociais mantêm pressão por políticas de redistribuição de terra, apesar de resistências políticas.',
+                img: 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Reforma_Agraria_Brasil.jpg'
+            },
+            {
+                date: '2023-03-01',
+                title: 'Conflitos no Cerrado e Amazônia',
+                subtitle: 'Expansão do agronegócio gera conflitos fundiários e impactos socioambientais significativos nas regiões Amazônica e do Cerrado',
+                content: 'O avanço do agronegócio continua gerando conflitos fundiários e impactos socioambientais significativos.',
+                img: 'https://agenciabrasil.ebc.com.br/sites/default/files/styles/teaser_publicacao/public/2023-03/agronegocio.jpg'
+            }
+        ];
+
+
+
+
+        // Utilitários
+        const $ = sel => document.querySelector(sel);
+        const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+        const eventsEl = $('#events');
+        const timeline = $('#timeline');
+        const yearFilter = $('#yearFilter');
+        const search = $('#search');
+        const viewSelect = $('#viewSelect');
+        const modal = $('#modal');
+        const modalContent = $('#modalContent');
+        const empty = $('#empty');
+
+        function parseYear(d) { try { return new Date(d).getFullYear(); } catch (e) { return '----' } }
+
+        function buildYearOptions() {
+            const years = Array.from(new Set(events.map(e => parseYear(e.date)))).sort((a, b) => b - a);
+            yearFilter.innerHTML = '<option value="all">Todos os anos</option>' + years.map(y => `<option value="${y}">${y}</option>`).join('');
+        }
+
+        function render(filtered) {
+            eventsEl.innerHTML = '';
+            if (filtered.length === 0) {
+                empty.style.display = 'block';
+                return;
+            } else {
+                empty.style.display = 'none';
+            }
+
+            filtered.forEach(ev => {
+                const el = document.createElement('div');
+                el.className = 'event';
+
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+
+                const colDate = document.createElement('div');
+                colDate.className = 'date';
+                colDate.textContent = ev.date;
+
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                // Conteúdo do card
+                card.innerHTML = `
+            <h3>${ev.title}</h3>
+            <div style="font-size:13px;color:var(--muted)">${ev.subtitle || ''}</div>
+            <p style="margin-top:8px">${ev.content}</p>
+        `;
+
+
+                card.addEventListener('click', () => {
+                    modalContent.innerHTML = `<h2 style='margin-top:0'>${ev.title}</h2>
+    <small style='color:var(--muted)'>${ev.date} — ${ev.subtitle || ''}</small>
+    ${ev.img ? `<img src="${ev.img}" style="width:100%; max-height:300px; object-fit:contain; margin-top:12px; border-radius:6px;">` : ''}
+    <div style='margin-top:12px;color:var(--muted)'>${ev.content}</div>`;
+                    modal.classList.add('open');
+                    modal.setAttribute('aria-hidden', 'false');
+                });
+
+                el.appendChild(dot);
+                const right = document.createElement('div');
+                right.appendChild(colDate);
+                right.appendChild(card);
+                el.appendChild(right);
+
+                eventsEl.appendChild(el);
+            });
+        }
+
+
+        function applyFilters() {
+            const q = search.value.trim().toLowerCase();
+            const year = yearFilter.value;
+            let filtered = events.slice();
+            if (year !== 'all') filtered = filtered.filter(e => parseYear(e.date).toString() === year);
+            if (q) filtered = filtered.filter(e => (e.title + ' ' + (e.subtitle || '') + ' ' + e.content + ' ' + e.date).toLowerCase().includes(q));
+            render(filtered.sort((a, b) => new Date(a.date) - new Date(b.date)));
+        }
+
+        // controles
+        search.addEventListener('input', () => applyFilters());
+        yearFilter.addEventListener('change', () => applyFilters());
+        viewSelect.addEventListener('change', () => {
+            if (viewSelect.value === 'horizontal') timeline.classList.add('horizontal'); else timeline.classList.remove('horizontal');
+        });
+
+        // modal
+        $('#closeModal').addEventListener('click', () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); });
+        modal.addEventListener('click', (e) => { if (e.target === modal) { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); } });
+
+        // inicialização
+        buildYearOptions(); applyFilters();
+
+        // função utilitária para inserir novos eventos dinamicamente (útil se quiser rodar via console)
+        window.addEvent = function (ev) { events.push(ev); buildYearOptions(); applyFilters(); }
+
+    </script>
+</body>
+
+</html>
