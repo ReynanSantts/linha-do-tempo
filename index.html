@@ -7,11 +7,11 @@
     <title>Linha do Tempo</title>
     <style>
         :root {
-            --bg: #0f1724;
-            --card: #0b1220;
-            --accent: #06b6d4;
-            --muted: #94a3b8;
-            --glass: rgba(255, 255, 255, 0.03);
+            --bg: #ffffff;
+            --card: #180900;
+            --accent: #ffffff;
+            --muted: #ffffff;
+            --glass: rgba(0, 0, 0, 0.03);
             --radius: 12px;
             --maxw: 1100px;
             color-scheme: dark;
@@ -22,18 +22,27 @@
             box-sizing: border-box
         }
 
+        input::placeholder {
+            color: #ffffff;
+        }
+
+        
+
         body {
             margin: 0;
-            background: linear-gradient(180deg, #071023 0%, #071428 100%);
-            color: #e6eef6;
+            background: linear-gradient(180deg, #3c291a 0%, #4a3526 100%);
+            color: #ffffff;
             -webkit-font-smoothing: antialiased;
             padding: 32px;
+            background: url('images/bg-textura.jpg') no-repeat center center fixed;
+            background-size: cover;
         }
 
         .container {
             max-width: var(--maxw);
             margin: 0 auto
         }
+
 
         header {
             display: flex;
@@ -56,9 +65,9 @@
 
         input[type=text],
         select {
-            background: var(--glass);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            color: var(--muted);
+            background: #180900;
+            border: 1px solid #180900;
+            color: white;
             padding: 8px 10px;
             border-radius: 8px
         }
@@ -75,7 +84,7 @@
         .timeline {
             position: relative;
             padding: 24px 12px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.02));
             border-radius: 14px;
             border: 1px solid rgba(255, 255, 255, 0.03)
         }
@@ -91,7 +100,6 @@
             display: grid;
             grid-template-columns: 70px 1fr;
             gap: 12px;
-            align-items: start
         }
 
         .event .dot {
@@ -108,10 +116,9 @@
         }
 
         .card {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+            background-color: #180900;
             padding: 12px 14px;
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.03)
         }
 
         .card h3 {
@@ -135,7 +142,7 @@
         }
 
         .horizontal .event {
-            min-width: 220px;
+            min-width: 290px;
             grid-template-columns: 1fr;
         }
 
@@ -150,7 +157,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(2, 6, 23, 0.6);
+            background: rgba(0, 0, 0, 0.6);
             visibility: hidden;
             opacity: 0;
             transition: all .18s ease
@@ -184,6 +191,24 @@
             text-align: center;
             color: var(--muted)
         }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 40px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgb(255, 255, 255);
+        }
+
+        .horizontal.timeline::before {
+            left: 0;
+            right: 0;
+            top: 60px;
+            bottom: auto;
+            height: 2px;
+            width: auto;
+        }
 
         @media (max-width:640px) {
             header {
@@ -203,10 +228,9 @@
         }
 
         .card {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+            background-color: #180900;
             padding: 12px 14px;
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
         }
@@ -224,6 +248,7 @@
             border-radius: 6px;
             margin-bottom: 8px;
         }
+
     </style>
 </head>
 
@@ -232,7 +257,6 @@
         <header>
             <div>
                 <h1>Linha do Tempo</h1>
-                <small style="color:var(--muted)">Template interativo</small>
             </div>
 
             <div class="controls">
@@ -380,28 +404,28 @@
                 title: 'Conflitos e agronegócio',
                 subtitle: 'Ascensão do agronegócio domina a agenda política e econômica, gerando disputas fundiárias e ambientais',
                 content: 'O agronegócio domina a agenda política e econômica, enquanto crescem os conflitos fundiários e ambientais.',
-                img: 'https://agenciabrasil.ebc.com.br/sites/default/files/styles/teaser_publicacao/public/2020-01/agronegocio.jpg'
+                img: 'images/gestao-de-conflitos-Agronegocio.jpg'
             },
             {
                 date: '2021-05-01',
                 title: 'Conflitos em terras indígenas',
                 subtitle: 'Aumento de invasões de grileiros e madeireiros ilegais, intensificando disputas territoriais',
                 content: 'O avanço de grileiros e madeireiros ilegais intensificou disputas em territórios indígenas.',
-                img: 'https://upload.wikimedia.org/wikipedia/commons/9/97/Conflito_Indigena.jpg'
+                img: 'images/conflitos-em-terras-indigenas.jpg'
             },
             {
                 date: '2022-08-01',
                 title: 'Debates sobre reforma agrária',
                 subtitle: 'Pressão contínua de movimentos sociais, como MST, por políticas de redistribuição de terra, apesar de resistências políticas',
                 content: 'O MST e organizações sociais mantêm pressão por políticas de redistribuição de terra, apesar de resistências políticas.',
-                img: 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Reforma_Agraria_Brasil.jpg'
+                img: 'images/reforma-agraria.jpg'
             },
             {
                 date: '2023-03-01',
                 title: 'Conflitos no Cerrado e Amazônia',
                 subtitle: 'Expansão do agronegócio gera conflitos fundiários e impactos socioambientais significativos nas regiões Amazônica e do Cerrado',
                 content: 'O avanço do agronegócio continua gerando conflitos fundiários e impactos socioambientais significativos.',
-                img: 'https://agenciabrasil.ebc.com.br/sites/default/files/styles/teaser_publicacao/public/2023-03/agronegocio.jpg'
+                img: 'images/Agro-e-fogo.jpg'
             }
         ];
 
