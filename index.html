@@ -112,13 +112,8 @@
 
         .event .date {
             font-size: 12px;
-            color: var(--muted)
-        }
-
-        .card {
-            background-color: #180900;
-            padding: 12px 14px;
-            border-radius: 12px;
+            color: var(--muted);
+            margin-bottom: 15px;
         }
 
         .card h3 {
@@ -138,6 +133,7 @@
             gap: 20px;
             overflow-x: auto;
             padding-bottom: 8px;
+            width: 100%;
         }
 
         .horizontal .event {
@@ -151,25 +147,8 @@
             overflow: hidden;
         }
 
-        /* ================== FESTEJOS HORIZONTAL ================== */
-        .horizontal-festejos #festejos {
-            display: flex;
-            flex-direction: row;
-            gap: 20px;
-            overflow-x: auto;
-        }
-
-        .horizontal-festejos #festejos::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .horizontal-festejos #festejos::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-        }
-
-        .horizontal-festejos .festejo-card {
-            min-width: 250px;
+        .horizontal .event .dot {
+            margin-bottom: 1.5rem;
         }
 
         /* Modal */
@@ -308,10 +287,6 @@
                 gap: 12px
             }
 
-            #festejos {
-                grid-template-columns: 1fr;
-            }
-
             .festejo-card img {
                 height: 130px;
             }
@@ -384,7 +359,7 @@
     </div>
 
     <div class="festas">
-        <h1>RESISTÊNCIA EM FORMA DE FESTA</h1>
+        <h1>Resistência em forma de festa</h1>
         <div id="festejos"></div>
     </div>
 
@@ -638,6 +613,7 @@
         const modal = $('#modal');
         const modalContent = $('#modalContent');
         const empty = $('#empty');
+        const festejosEl = $('#festejos');
 
         function parseYear(d) { try { return new Date(d).getFullYear(); } catch (e) { return '----' } }
 
@@ -654,6 +630,9 @@
             } else {
                 empty.style.display = 'none';
             }
+
+            // Verifica se está no modo horizontal
+            const isHorizontal = timeline.classList.contains('horizontal');
 
             filtered.forEach(ev => {
                 const el = document.createElement('div');
@@ -676,7 +655,6 @@
             <p style="margin-top:8px">${ev.content}</p>
         `;
 
-
                 card.addEventListener('click', () => {
                     modalContent.innerHTML = `<h2 style='margin-top:0'>${ev.title}</h2>
     <small style='color:var(--muted)'>${ev.date} — ${ev.subtitle || ''}</small>
@@ -694,6 +672,11 @@
 
                 eventsEl.appendChild(el);
             });
+
+            // Habilita scroll horizontal
+            if (isHorizontal) {
+                enableHorizontalScroll(eventsEl);
+            }
         }
 
 
@@ -706,9 +689,71 @@
             render(filtered.sort((a, b) => new Date(a.date) - new Date(b.date)));
         }
 
+        function filterFestejos() {
+            const q = search.value.trim().toLowerCase();
+            let filtered = festejos.slice();
+
+            if (q) {
+                filtered = filtered.filter(f =>
+                    (f.title + ' ' + (f.subtitle || '') + ' ' + f.content + ' ' + f.date)
+                        .toLowerCase()
+                        .includes(q)
+                );
+            }
+
+            festejosEl.innerHTML = '';
+            if (filtered.length === 0) {
+                festejosEl.innerHTML = '<p style="color:white">Nenhum festejo encontrado.</p>';
+                return;
+            }
+
+            filtered.forEach(ev => {
+                const card = document.createElement('div');
+                card.className = 'festejo-card';
+                card.innerHTML = `
+            <img src="${ev.img}" alt="${ev.title}">
+            <div>
+                <h3>${ev.title}</h3>
+                <small>${ev.date} – ${ev.subtitle || ''}</small>
+                <p>${ev.content}</p>
+            </div>
+        `;
+                festejosEl.appendChild(card);
+            });
+        }
+
+        function renderFestejos(filtered) {
+            festejosEl.innerHTML = '';
+            if (filtered.length === 0) {
+                festejosEl.innerHTML = '<p style="color:white">Nenhum festejo encontrado.</p>';
+                return;
+            }
+
+            filtered.forEach(ev => {
+                const card = document.createElement('div');
+                card.className = 'festejo-card';
+                card.innerHTML = `
+            <img src="${ev.img}" alt="${ev.title}">
+            <div>
+                <h3>${ev.title}</h3>
+                <small>${ev.date} – ${ev.subtitle}</small>
+                <p>${ev.content}</p>
+            </div>
+        `;
+                festejosEl.appendChild(card);
+            });
+        }
+
         // controles
-        search.addEventListener('input', () => applyFilters());
-        yearFilter.addEventListener('change', () => applyFilters());
+        search.addEventListener('input', () => {
+            applyFilters();     // filtra eventos
+            filterFestejos();   // filtra festejos
+        });
+
+        yearFilter.addEventListener('change', () => {
+            applyFilters();     // só eventos têm filtro por ano
+        });;
+
         viewSelect.addEventListener('change', () => {
             const horizontal = viewSelect.value === 'horizontal';
 
@@ -716,6 +761,7 @@
             if (horizontal) timeline.classList.add('horizontal');
             else timeline.classList.remove('horizontal');
 
+            applyFilters(); 
             // Festejos
             renderFestejos(horizontal);
         });
@@ -802,38 +848,46 @@
                 festejosContainer.appendChild(card);
             });
 
-            // Aplica layout
+            // Aplica layout    
             if (horizontal) {
                 festejosContainer.style.display = 'flex';
                 festejosContainer.style.flexDirection = 'row';
                 festejosContainer.style.overflowX = 'auto';
                 festejosContainer.style.gap = '20px';
+
+                enableHorizontalScroll(festejosContainer);
+
+                // Define largura fixa dos cards
+                festejosContainer.querySelectorAll('.festejo-card').forEach(card => {
+                    card.style.flex = '0 0 400px';
+                });
             } else {
                 festejosContainer.style.display = 'grid';
                 festejosContainer.style.gridTemplateColumns = 'repeat(2, 1fr)';
                 festejosContainer.style.gap = '15px';
                 festejosContainer.style.overflowX = 'visible';
+
+                // Reset para não afetar a versão vertical
+                festejosContainer.querySelectorAll('.festejo-card').forEach(card => {
+                    card.style.flex = '';
+                    card.style.maxWidth = '';
+                });
             }
         }
 
         // Inicializa vertical por padrão
         renderFestejos(false);
 
+        // Função para rolagem horizontal com scroll do mouse
+        function enableHorizontalScroll(element) {
+            element.addEventListener('wheel', (e) => {
+                // Previne o scroll vertical padrão
+                e.preventDefault();
 
-        festejos.forEach(ev => {
-            const card = document.createElement('div');
-            card.className = 'festejo-card';
-            card.innerHTML = `
-    <img src="${ev.img}" alt="${ev.title}">
-    <div>
-      <h2>${ev.title}</h2>
-      <small>${ev.date} – ${ev.subtitle}</small>
-      <p>${ev.content}</p>
-    </div>
-  `;
-            festejosContainer.appendChild(card);
-        });
-
+                // Rola horizontalmente baseado no deltaY (scroll vertical)
+                element.scrollLeft += e.deltaY * 2; // Ajuste a velocidade aqui
+            }, { passive: false });
+        }
     </script>
 </body>
 
