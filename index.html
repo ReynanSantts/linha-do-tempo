@@ -280,26 +280,47 @@
             color: #ffffff;
         }
 
-        @media (max-width:640px) {
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px
-            }
+@media (max-width:640px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px
+    }
 
-            .festejo-card img {
-                height: 130px;
-            }
+    #festejos {
+        display: flex;
+        flex-direction: column;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 15px;
+    }
 
-            .event {
-                grid-template-columns: 56px 1fr
-            }
+    .festejo-card {
+        min-width: 85vw;
+        max-width: 85vw;
+        scroll-snap-align: start;
+        flex: 0 0 auto;
+    }
 
-            .controls {
-                width: 100%;
-                gap: 6px
-            }
-        }
+    .festejo-card img {
+        height: 130px;
+    }
+
+    .event {
+        grid-template-columns: 56px 1fr;
+        gap: 15px; 
+    }
+
+    .controls {
+        width: 100%;
+        gap: 6px
+    }
+
+   
+    #festejos {
+        grid-template-columns: 1fr !important;
+    }
+}
 
         .card {
             background-color: #180900;
