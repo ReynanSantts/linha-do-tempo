@@ -26,7 +26,7 @@
             color: #ffffff;
         }
 
-        
+
 
         body {
             margin: 0;
@@ -191,6 +191,7 @@
             text-align: center;
             color: var(--muted)
         }
+
         .timeline::before {
             content: '';
             position: absolute;
@@ -208,6 +209,70 @@
             bottom: auto;
             height: 2px;
             width: auto;
+        }
+
+        /* ================== FESTEJOS ================== */
+        .festas {
+            margin: 40px 0;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .festas h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #ffffff;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        #festejos {
+            display: grid;
+             grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .festejo-card {
+            background: #180900;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .festejo-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .festejo-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .festejo-card div {
+            padding: 10px;
+        }
+
+        .festejo-card h3 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+            color: #222;
+        }
+
+        .festejo-card small {
+            display: block;
+            margin-bottom: 10px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .festejo-card p {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #444;
         }
 
         @media (max-width:640px) {
@@ -248,7 +313,6 @@
             border-radius: 6px;
             margin-bottom: 8px;
         }
-
     </style>
 </head>
 
@@ -285,246 +349,247 @@
         </div>
     </div>
 
+    <div class="festas">
+        <h1>Festejos</h1>
+        <div id="festejos"></div>
+    </div>
+
     <script>
         const events = [
-    {
-        img: 'images/capitaniashereditariasmapaatualizado-0-cke.jpg',
-        date: '1534-01-01',
-        title: 'Capitanias Hereditárias',
-        subtitle: 'Sistema de doação de terras pela Coroa Portuguesa a donatários, concentrando grandes extensões de terra em poucas mãos e criando desigualdade fundiária inicial',
-        content: 'Iniciada em 1534, concentrou vastos territórios nas mãos de poucos donatários, moldando a posse de terra no Brasil e estabelecendo um padrão de desigualdade fundiária que persiste até hoje.',
-    },
-    {
-        date: '1549-01-01',
-        title: 'Implantação do Governo-Geral',
-        subtitle: 'Centralização do poder da Coroa sobre as capitanias, limitando autonomia dos donatários e fortalecendo a presença administrativa portuguesa',
-        content: 'O Governo-Geral reforçou o controle da Coroa sobre as capitanias e a distribuição de terras, limitando a autonomia dos donatários.',
-        img: 'images/D-JOAOIII.jpg'
-    },
+            {
+                img: 'images/capitaniashereditariasmapaatualizado-0-cke.jpg',
+                date: '1534-01-01',
+                title: 'Capitanias Hereditárias',
+                subtitle: 'Sistema de doação de terras pela Coroa Portuguesa a donatários, concentrando grandes extensões de terra em poucas mãos e criando desigualdade fundiária inicial',
+                content: 'Iniciada em 1534, concentrou vastos territórios nas mãos de poucos donatários, moldando a posse de terra no Brasil e estabelecendo um padrão de desigualdade fundiária que persiste até hoje.',
+            },
+            {
+                date: '1549-01-01',
+                title: 'Implantação do Governo-Geral',
+                subtitle: 'Centralização do poder da Coroa sobre as capitanias, limitando autonomia dos donatários e fortalecendo a presença administrativa portuguesa',
+                content: 'O Governo-Geral reforçou o controle da Coroa sobre as capitanias e a distribuição de terras, limitando a autonomia dos donatários.',
+                img: 'images/D-JOAOIII.jpg'
+            },
 
-    {
-        img: 'images/quilombo-palmares.jpg',
-        date: '1597-01-01',
-        title: 'Resistência e Território: A Fundação de Palmares',
-        subtitle: 'Surgimento do maior quilombo das Américas, símbolo da resistência negra à escravidão e da construção de territórios livres',
-        content: 'Desde o final do século XVI, a formação de quilombos como Palmares representou a mais potente forma de resistência à escravidão. Esses territórios não eram apenas refúgios, mas espaços de organização social, política e cultural, estabelecendo uma relação ancestral com a terra baseada na coletividade e na liberdade, em direta oposição ao modelo latifundiário e escravocrata que se impunha.',
-    },
+            {
+                img: 'images/quilombo-palmares.jpg',
+                date: '1597-01-01',
+                title: 'Resistência e Território: A Fundação de Palmares',
+                subtitle: 'Surgimento do maior quilombo das Américas, símbolo da resistência negra à escravidão e da construção de territórios livres',
+                content: 'Desde o final do século XVI, a formação de quilombos como Palmares representou a mais potente forma de resistência à escravidão. Esses territórios não eram apenas refúgios, mas espaços de organização social, política e cultural, estabelecendo uma relação ancestral com a terra baseada na coletividade e na liberdade, em direta oposição ao modelo latifundiário e escravocrata que se impunha.',
+            },
 
-    {
-        date: '1822-09-07',
-        title: 'Independência do Brasil',
-        subtitle: 'Apesar de romper com Portugal, a independência manteve a concentração de terras nas elites agrárias, sem reforma agrária efetiva',
-        content: 'Apesar da independência, manteve-se a estrutura agrária excludente, perpetuando privilégios das elites rurais.',
-        img: 'images/independenciabrasil.jpg'
-    },
-    {
-        date: '1824-03-25',
-        title: 'Constituição de 1824',
-        subtitle: 'Primeira Constituição brasileira, mantendo privilégios da elite agrária e sem previsão de redistribuição de terras',
-        content: 'Estabeleceu a Monarquia Constitucional, garantiu o direito de propriedade sem limites e reforçou a concentração fundiária.',
-        img: 'images/const-1824.jpg'
-    },
-    {
-        img: 'images/lei-de-terras.jpg',
-        date: '1850-09-18',
-        title: 'Lei de Terras',
-        subtitle: 'Estabelece que acesso à terra só seria possível por compra, excluindo pobres, indígenas, ex-escravizados e quilombolas, consolidando a concentração fundiária',
-        content: 'Em um momento de transição para o fim do tráfico de escravizados, a Lei de Terras foi um mecanismo para impedir o acesso à propriedade por negros libertos e quilombolas, garantindo que a terra continuasse a ser um privilégio da elite agrária. Para os quilombos existentes, a lei significou a negação de sua existência legal e a intensificação da perseguição.',
-    },
-    {
-        img: 'images/abolicao.jpg',
-        date: '1888-05-13',
-        title: 'Abolição da Escravidão',
-        subtitle: 'Libertação sem acesso à terra, mantendo a desigualdade fundiária e empurrando a população negra para a marginalidade no campo e nas cidades',
-        content: 'A abolição não foi acompanhada de nenhuma política de reforma agrária ou de reparação. Milhões de ex-escravizados ficaram sem acesso à terra, ampliando a desigualdade fundiária. Para os quilombolas, a liberdade formal não se traduziu em segurança territorial, mantendo suas comunidades sob a ameaça constante de expulsão.',
-    },
-    {
-        date: '1891-02-24',
-        title: 'Constituição de 1891',
-        subtitle: 'Primeira Constituição republicana, reforçando a propriedade privada sem limites sociais',
-        content: 'Instituiu a República e manteve a concentração fundiária ao garantir amplamente o direito de propriedade, sem preocupação com função social.',
-        img: 'images/const-1891.jpg'
-    },
-    {
-        date: '1934-07-16',
-        title: 'Constituição de 1934',
-        subtitle: 'Primeira Constituição a mencionar a função social da propriedade, ainda de forma limitada, sem mecanismos de aplicação efetiva',
-        content: 'Essa Constituição inovou ao introduzir o conceito de função social da propriedade, mas sem instrumentos eficazes de aplicação.',
-        img: 'images/const-1934.jpg'
-    },
-    {
-        date: '1937-11-10',
-        title: 'Constituição de 1937',
-        subtitle: 'Concentração de poder no Executivo durante o Estado Novo, sem avanços sociais quanto à reforma agrária',
-        content: 'A Carta de 1937 reforçou o poder estatal e ignorou avanços sociais, mantendo privilégios fundiários.',
-        img: 'images/const-1937.jpg'
-    },
-    {
-        date: '1945-01-01',
-        title: 'Colonização agrícola',
-        subtitle: 'Projetos de incentivo à ocupação agrícola no Sul e interior do Brasil, muitas vezes em áreas indígenas, gerando conflitos e deslocamentos populacionais',
-        content: 'Políticas públicas incentivaram a colonização em áreas indígenas, reforçando conflitos e deslocamentos populacionais.',
-        img: 'images/colonizacao-agricola-plantation.jpg'
-    },
-    {
-        date: '1946-09-18',
-        title: 'Constituição de 1946',
-        subtitle: 'Reforçou a ideia de função social da propriedade, mas sem instrumentos eficazes de reforma agrária',
-        content: 'Após a ditadura do Estado Novo, a Constituição de 1946 reafirmou direitos civis e a função social da propriedade, mas não implementou medidas concretas.',
-        img: 'images/const-1946.jpg'
-    },
-    {
-        date: '1964-11-30',
-        title: 'Estatuto da Terra',
-        subtitle: 'Base legal para a reforma agrária, prevendo função social da terra, mas com aplicação limitada pelo regime militar',
-        content: 'Prevê a função social da terra e a reforma agrária, mas teve aplicação limitada, servindo mais como instrumento político do regime.',
-        img: 'images/estatuto-da-terra.jpg'
-    },
-    {
-        date: '1967-01-24',
-        title: 'Constituição de 1967',
-        subtitle: 'Institucionalizou o regime militar, com forte centralização do poder e sem avanços para reforma agrária',
-        content: 'Reforçou o direito absoluto à propriedade privada e enfraqueceu qualquer possibilidade de reforma agrária efetiva.',
-        img: 'images/const-1967.jpg'
-    },
-    {
-        date: '1969-10-17',
-        title: 'Emenda Constitucional nº 1/1969',
-        subtitle: 'Na prática funcionou como uma nova constituição, aprofundando a concentração de poder dos militares',
-        content: 'Consolidou o autoritarismo, restringindo direitos civis e ignorando demandas sociais como a redistribuição de terras.',
-        img: 'images/const-1969.jpg'
-    },
-    {
-        date: '1970-01-01',
-        title: 'Programa de Integração Nacional (PIN)',
-        subtitle: 'Colonização da Amazônia com incentivo a grandes proprietários e empresas, gerando conflitos territoriais e impactos ambientais',
-        content: 'Favoreceu grandes proprietários e empresas, gerando intensos conflitos territoriais e impactos ambientais.',
-        img: 'images/programa-integracao-nacional.jpg'
-    },
-    {
-        date: '1984-01-01',
-        title: 'Fundação do MST',
-        subtitle: 'Criação do Movimento dos Trabalhadores Rurais Sem Terra, lutando pela reforma agrária e pelo acesso à terra',
-        content: 'O MST passou a protagonizar ocupações e lutas pela reforma agrária, denunciando a concentração fundiária e exigindo justiça social.',
-        img: 'images/fundacao-mst.jpg'
-    },
-    {
-        date: '1985-01-01',
-        title: 'Criação do INCRA',
-        subtitle: 'Instituto Nacional de Colonização e Reforma Agrária, responsável pela execução da reforma agrária e administração de terras públicas',
-        content: 'Órgão responsável por administrar terras públicas e implementar a reforma agrária, central nas políticas fundiárias.',
-        img: 'images/incra-logo.jpg'
-    },
-    {
-        date: '1988-10-05',
-        title: 'Constituição de 1988',
-        subtitle: 'Consolidação da função social da propriedade, assegurando direitos territoriais a indígenas, quilombolas e assentamentos rurais',
-        content: 'Assegura direitos territoriais e consolida o princípio da função social da propriedade, incluindo direitos de indígenas e quilombolas.',
-        img: 'images/constituicao-88.jpg'
-    },
-    {
-        date: '1996-04-17',
-        title: 'Massacre de Eldorado dos Carajás',
-        subtitle: 'Violência contra trabalhadores sem-terra, símbolo da criminalização das lutas sociais por terra',
-        content: 'Símbolo da criminalização das lutas sociais por terra, 19 trabalhadores sem-terra foram assassinados pela polícia no Pará.',
-        img: 'images/Eldorado-massacre.jpg'
-    },
-    {
-        date: '2003-01-01',
-        title: 'Criação do MDA',
-        subtitle: 'Ministério do Desenvolvimento Agrário, fortalecendo a agricultura familiar e assentamentos rurais',
-        content: 'Formulou políticas voltadas para pequenos agricultores, assentamentos e comunidades tradicionais.',
-        img: 'images/mda.jpg'
-    },
-    {
-        date: '2010-01-01',
-        title: 'Demarcações de terras',
-        subtitle: 'Avanços no reconhecimento de territórios indígenas e quilombolas, consolidando direitos de povos tradicionais',
-        content: 'O período foi marcado por demarcações importantes e pela consolidação de direitos de povos tradicionais.',
-        img: 'images/demarcacao-terra.jpg'
-    },
-    {
-        date: '2017-01-01',
-        title: 'Retrocessos nas demarcações',
-        subtitle: 'Disputas judiciais e políticas contra terras indígenas e quilombolas, ameaçando direitos conquistados',
-        content: 'O STF e o Congresso passaram a ser palco de disputas que ameaçam os direitos conquistados pelos povos tradicionais.',
-        img: 'images/retrocesso-demarcacoes.jpg'
-    },
-    {
-        date: '2020-01-01',
-        title: 'Conflitos e agronegócio',
-        subtitle: 'Ascensão do agronegócio domina a agenda política e econômica, gerando disputas fundiárias e ambientais',
-        content: 'O agronegócio domina a agenda política e econômica, enquanto crescem os conflitos fundiários e ambientais.',
-        img: 'images/gestao-de-conflitos-Agronegocio.jpg'
-    },
-    {
-        date: '2021-05-01',
-        title: 'Conflitos em terras indígenas',
-        subtitle: 'Aumento de invasões de grileiros e madeireiros ilegais, intensificando disputas territoriais',
-        content: 'O avanço de grileiros e madeireiros ilegais intensificou disputas em territórios indígenas.',
-        img: 'images/conflitos-em-terras-indigenas.jpg'
-    },
-    {
-        date: '2022-08-01',
-        title: 'Debates sobre reforma agrária',
-        subtitle: 'Pressão contínua de movimentos sociais, como MST, por políticas de redistribuição de terra, apesar de resistências políticas',
-        content: 'O MST e organizações sociais mantêm pressão por políticas de redistribuição de terra, apesar de resistências políticas.',
-        img: 'images/reforma-agraria.jpg'
-    },
-    {
-        date: '2023-03-01',
-        title: 'Conflitos no Cerrado e Amazônia',
-        subtitle: 'Expansão do agronegócio gera conflitos fundiários e impactos socioambientais significativos nas regiões Amazônica e do Cerrado',
-        content: 'O avanço do agronegócio continua gerando conflitos fundiários e impactos socioambientais significativos.',
-        img: 'images/Agro-e-fogo.jpg'
-    },
-    {
-        img: 'images/stf-marco-temporal.jpg',
-        date: '2023-09-21',
-        title: 'STF Rejeita o Marco Temporal',
-        subtitle: 'Supremo Tribunal Federal decide, por 9 votos a 2, que a tese do Marco Temporal para demarcação de terras indígenas é inconstitucional',
-        content: 'Em uma decisão histórica para os povos originários, o STF derruba a tese que restringia o direito à terra apenas às áreas ocupadas na data da promulgação da Constituição de 1988. Embora focada na questão indígena, a decisão fortaleceu a luta de outros povos tradicionais, como os quilombolas, contra teses restritivas de direitos.',
-    },
-    {
-        img: 'images/congresso-marco-temporal.jpg',
-        date: '2023-12-14',
-        title: 'Congresso Derruba Veto e Impõe o Marco Temporal',
-        subtitle: 'Em afronta à decisão do STF, o Congresso Nacional derruba o veto presidencial e promulga a Lei 14.701, que estabelece o Marco Temporal',
-        content: 'A disputa de poder entre Judiciário e Legislativo gera um cenário de grande insegurança jurídica para as demarcações. A lei aprovada não apenas contraria o STF, mas também abre portas para a revisão de terras já demarcadas, intensificando os conflitos e ameaçando territórios indígenas e quilombolas.',
-    },
-    {
-        img: 'images/cpt-conflitos-2023.jpg',
-        date: '2024-04-22',
-        title: 'Recorde de Conflitos no Campo em 2023',
-        subtitle: 'Comissão Pastoral da Terra (CPT) divulga relatório anual apontando o maior número de conflitos no campo desde 1985',
-        content: 'O relatório de 2023 da CPT revela um total de 2.203 conflitos, afetando mais de 950 mil pessoas. A violência, a grilagem e as disputas por terra, impulsionadas pela expansão do agronegócio e pela insegurança jurídica, atingem violentamente indígenas, quilombolas e sem-terra.',
-    },
-    {
-        img: 'images/terra-da-gente.jpg',
-        date: '2024-04-15',
-        title: 'Lançamento do Programa Terra da Gente',
-        subtitle: 'Governo Federal anuncia novo programa para acelerar a Reforma Agrária, com o objetivo de assentar 295 mil famílias até 2026',
-        content: 'Com a criação de "prateleiras de terras" disponíveis (terras públicas, de bancos, de devedores da União, etc.), o governo busca diversificar as formas de obtenção de áreas para a reforma agrária. O programa visa atender a uma demanda histórica de movimentos sociais e inclui a regularização de territórios quilombolas.',
-    },
-    {
-        img: 'images/titulacao-quilombola.jpg',
-        date: '2024-12-26',
-        title: 'Avanço na Titulação de Terras Quilombolas',
-        subtitle: 'Governo Federal encerra o ano com um número recorde de decretos de regularização de territórios quilombolas, mas o desafio da titulação definitiva permanece',
-        content: 'Ao longo de 2024, o governo assinou 31 decretos que beneficiam milhares de famílias quilombolas em todo o país. Apesar de representar um avanço significativo após anos de paralisia, o número de territórios titulados ainda é ínfimo perto da demanda total, e as comunidades seguem enfrentando a lentidão do processo e a violência em seus territórios.',
-    },
-    {
-        img: 'images/violencia-campo-2025.jpg',
-        date: '2025-01-01',
-        title: 'Persistência da Violência e Disputas Territoriais',
-        subtitle: 'O ano se inicia com a continuidade das tensões no campo, com a bancada ruralista pressionando por retrocessos na legislação ambiental e fundiária',
-        content: 'O cenário para o futuro próximo permanece desafiador. A luta pela terra no Brasil continua sendo um embate entre diferentes visões de mundo: de um lado, o agronegócio e a concentração de poder; de outro, os movimentos sociais, indígenas e quilombolas, que defendem a reforma agrária, a justiça social e a preservação ambiental como caminhos para um país mais justo.',
-    }
-];
-
-
-
-
+            {
+                date: '1822-09-07',
+                title: 'Independência do Brasil',
+                subtitle: 'Apesar de romper com Portugal, a independência manteve a concentração de terras nas elites agrárias, sem reforma agrária efetiva',
+                content: 'Apesar da independência, manteve-se a estrutura agrária excludente, perpetuando privilégios das elites rurais.',
+                img: 'images/independenciabrasil.jpg'
+            },
+            {
+                date: '1824-03-25',
+                title: 'Constituição de 1824',
+                subtitle: 'Primeira Constituição brasileira, mantendo privilégios da elite agrária e sem previsão de redistribuição de terras',
+                content: 'Estabeleceu a Monarquia Constitucional, garantiu o direito de propriedade sem limites e reforçou a concentração fundiária.',
+                img: 'images/const-1824.jpg'
+            },
+            {
+                img: 'images/lei-de-terras.jpg',
+                date: '1850-09-18',
+                title: 'Lei de Terras',
+                subtitle: 'Estabelece que acesso à terra só seria possível por compra, excluindo pobres, indígenas, ex-escravizados e quilombolas, consolidando a concentração fundiária',
+                content: 'Em um momento de transição para o fim do tráfico de escravizados, a Lei de Terras foi um mecanismo para impedir o acesso à propriedade por negros libertos e quilombolas, garantindo que a terra continuasse a ser um privilégio da elite agrária. Para os quilombos existentes, a lei significou a negação de sua existência legal e a intensificação da perseguição.',
+            },
+            {
+                img: 'images/abolicao.jpg',
+                date: '1888-05-13',
+                title: 'Abolição da Escravidão',
+                subtitle: 'Libertação sem acesso à terra, mantendo a desigualdade fundiária e empurrando a população negra para a marginalidade no campo e nas cidades',
+                content: 'A abolição não foi acompanhada de nenhuma política de reforma agrária ou de reparação. Milhões de ex-escravizados ficaram sem acesso à terra, ampliando a desigualdade fundiária. Para os quilombolas, a liberdade formal não se traduziu em segurança territorial, mantendo suas comunidades sob a ameaça constante de expulsão.',
+            },
+            {
+                date: '1891-02-24',
+                title: 'Constituição de 1891',
+                subtitle: 'Primeira Constituição republicana, reforçando a propriedade privada sem limites sociais',
+                content: 'Instituiu a República e manteve a concentração fundiária ao garantir amplamente o direito de propriedade, sem preocupação com função social.',
+                img: 'images/const-1891.jpg'
+            },
+            {
+                date: '1934-07-16',
+                title: 'Constituição de 1934',
+                subtitle: 'Primeira Constituição a mencionar a função social da propriedade, ainda de forma limitada, sem mecanismos de aplicação efetiva',
+                content: 'Essa Constituição inovou ao introduzir o conceito de função social da propriedade, mas sem instrumentos eficazes de aplicação.',
+                img: 'images/const-1934.jpg'
+            },
+            {
+                date: '1937-11-10',
+                title: 'Constituição de 1937',
+                subtitle: 'Concentração de poder no Executivo durante o Estado Novo, sem avanços sociais quanto à reforma agrária',
+                content: 'A Carta de 1937 reforçou o poder estatal e ignorou avanços sociais, mantendo privilégios fundiários.',
+                img: 'images/const-1937.jpg'
+            },
+            {
+                date: '1945-01-01',
+                title: 'Colonização agrícola',
+                subtitle: 'Projetos de incentivo à ocupação agrícola no Sul e interior do Brasil, muitas vezes em áreas indígenas, gerando conflitos e deslocamentos populacionais',
+                content: 'Políticas públicas incentivaram a colonização em áreas indígenas, reforçando conflitos e deslocamentos populacionais.',
+                img: 'images/colonizacao-agricola-plantation.jpg'
+            },
+            {
+                date: '1946-09-18',
+                title: 'Constituição de 1946',
+                subtitle: 'Reforçou a ideia de função social da propriedade, mas sem instrumentos eficazes de reforma agrária',
+                content: 'Após a ditadura do Estado Novo, a Constituição de 1946 reafirmou direitos civis e a função social da propriedade, mas não implementou medidas concretas.',
+                img: 'images/const-1946.jpg'
+            },
+            {
+                date: '1964-11-30',
+                title: 'Estatuto da Terra',
+                subtitle: 'Base legal para a reforma agrária, prevendo função social da terra, mas com aplicação limitada pelo regime militar',
+                content: 'Prevê a função social da terra e a reforma agrária, mas teve aplicação limitada, servindo mais como instrumento político do regime.',
+                img: 'images/estatuto-da-terra.jpg'
+            },
+            {
+                date: '1967-01-24',
+                title: 'Constituição de 1967',
+                subtitle: 'Institucionalizou o regime militar, com forte centralização do poder e sem avanços para reforma agrária',
+                content: 'Reforçou o direito absoluto à propriedade privada e enfraqueceu qualquer possibilidade de reforma agrária efetiva.',
+                img: 'images/const-1967.jpg'
+            },
+            {
+                date: '1969-10-17',
+                title: 'Emenda Constitucional nº 1/1969',
+                subtitle: 'Na prática funcionou como uma nova constituição, aprofundando a concentração de poder dos militares',
+                content: 'Consolidou o autoritarismo, restringindo direitos civis e ignorando demandas sociais como a redistribuição de terras.',
+                img: 'images/const-1969.jpg'
+            },
+            {
+                date: '1970-01-01',
+                title: 'Programa de Integração Nacional (PIN)',
+                subtitle: 'Colonização da Amazônia com incentivo a grandes proprietários e empresas, gerando conflitos territoriais e impactos ambientais',
+                content: 'Favoreceu grandes proprietários e empresas, gerando intensos conflitos territoriais e impactos ambientais.',
+                img: 'images/programa-integracao-nacional.jpg'
+            },
+            {
+                date: '1984-01-01',
+                title: 'Fundação do MST',
+                subtitle: 'Criação do Movimento dos Trabalhadores Rurais Sem Terra, lutando pela reforma agrária e pelo acesso à terra',
+                content: 'O MST passou a protagonizar ocupações e lutas pela reforma agrária, denunciando a concentração fundiária e exigindo justiça social.',
+                img: 'images/fundacao-mst.jpg'
+            },
+            {
+                date: '1985-01-01',
+                title: 'Criação do INCRA',
+                subtitle: 'Instituto Nacional de Colonização e Reforma Agrária, responsável pela execução da reforma agrária e administração de terras públicas',
+                content: 'Órgão responsável por administrar terras públicas e implementar a reforma agrária, central nas políticas fundiárias.',
+                img: 'images/incra-logo.jpg'
+            },
+            {
+                date: '1988-10-05',
+                title: 'Constituição de 1988',
+                subtitle: 'Consolidação da função social da propriedade, assegurando direitos territoriais a indígenas, quilombolas e assentamentos rurais',
+                content: 'Assegura direitos territoriais e consolida o princípio da função social da propriedade, incluindo direitos de indígenas e quilombolas.',
+                img: 'images/constituicao-88.jpg'
+            },
+            {
+                date: '1996-04-17',
+                title: 'Massacre de Eldorado dos Carajás',
+                subtitle: 'Violência contra trabalhadores sem-terra, símbolo da criminalização das lutas sociais por terra',
+                content: 'Símbolo da criminalização das lutas sociais por terra, 19 trabalhadores sem-terra foram assassinados pela polícia no Pará.',
+                img: 'images/Eldorado-massacre.jpg'
+            },
+            {
+                date: '2003-01-01',
+                title: 'Criação do MDA',
+                subtitle: 'Ministério do Desenvolvimento Agrário, fortalecendo a agricultura familiar e assentamentos rurais',
+                content: 'Formulou políticas voltadas para pequenos agricultores, assentamentos e comunidades tradicionais.',
+                img: 'images/mda.jpg'
+            },
+            {
+                date: '2010-01-01',
+                title: 'Demarcações de terras',
+                subtitle: 'Avanços no reconhecimento de territórios indígenas e quilombolas, consolidando direitos de povos tradicionais',
+                content: 'O período foi marcado por demarcações importantes e pela consolidação de direitos de povos tradicionais.',
+                img: 'images/demarcacao-terra.jpg'
+            },
+            {
+                date: '2017-01-01',
+                title: 'Retrocessos nas demarcações',
+                subtitle: 'Disputas judiciais e políticas contra terras indígenas e quilombolas, ameaçando direitos conquistados',
+                content: 'O STF e o Congresso passaram a ser palco de disputas que ameaçam os direitos conquistados pelos povos tradicionais.',
+                img: 'images/retrocesso-demarcacoes.jpg'
+            },
+            {
+                date: '2020-01-01',
+                title: 'Conflitos e agronegócio',
+                subtitle: 'Ascensão do agronegócio domina a agenda política e econômica, gerando disputas fundiárias e ambientais',
+                content: 'O agronegócio domina a agenda política e econômica, enquanto crescem os conflitos fundiários e ambientais.',
+                img: 'images/gestao-de-conflitos-Agronegocio.jpg'
+            },
+            {
+                date: '2021-05-01',
+                title: 'Conflitos em terras indígenas',
+                subtitle: 'Aumento de invasões de grileiros e madeireiros ilegais, intensificando disputas territoriais',
+                content: 'O avanço de grileiros e madeireiros ilegais intensificou disputas em territórios indígenas.',
+                img: 'images/conflitos-em-terras-indigenas.jpg'
+            },
+            {
+                date: '2022-08-01',
+                title: 'Debates sobre reforma agrária',
+                subtitle: 'Pressão contínua de movimentos sociais, como MST, por políticas de redistribuição de terra, apesar de resistências políticas',
+                content: 'O MST e organizações sociais mantêm pressão por políticas de redistribuição de terra, apesar de resistências políticas.',
+                img: 'images/reforma-agraria.jpg'
+            },
+            {
+                date: '2023-03-01',
+                title: 'Conflitos no Cerrado e Amazônia',
+                subtitle: 'Expansão do agronegócio gera conflitos fundiários e impactos socioambientais significativos nas regiões Amazônica e do Cerrado',
+                content: 'O avanço do agronegócio continua gerando conflitos fundiários e impactos socioambientais significativos.',
+                img: 'images/Agro-e-fogo.jpg'
+            },
+            {
+                img: 'images/stf-marco-temporal.jpg',
+                date: '2023-09-21',
+                title: 'STF Rejeita o Marco Temporal',
+                subtitle: 'Supremo Tribunal Federal decide, por 9 votos a 2, que a tese do Marco Temporal para demarcação de terras indígenas é inconstitucional',
+                content: 'Em uma decisão histórica para os povos originários, o STF derruba a tese que restringia o direito à terra apenas às áreas ocupadas na data da promulgação da Constituição de 1988. Embora focada na questão indígena, a decisão fortaleceu a luta de outros povos tradicionais, como os quilombolas, contra teses restritivas de direitos.',
+            },
+            {
+                img: 'images/congresso-marco-temporal.jpg',
+                date: '2023-12-14',
+                title: 'Congresso Derruba Veto e Impõe o Marco Temporal',
+                subtitle: 'Em afronta à decisão do STF, o Congresso Nacional derruba o veto presidencial e promulga a Lei 14.701, que estabelece o Marco Temporal',
+                content: 'A disputa de poder entre Judiciário e Legislativo gera um cenário de grande insegurança jurídica para as demarcações. A lei aprovada não apenas contraria o STF, mas também abre portas para a revisão de terras já demarcadas, intensificando os conflitos e ameaçando territórios indígenas e quilombolas.',
+            },
+            {
+                img: 'images/cpt-conflitos-2023.jpg',
+                date: '2024-04-22',
+                title: 'Recorde de Conflitos no Campo em 2023',
+                subtitle: 'Comissão Pastoral da Terra (CPT) divulga relatório anual apontando o maior número de conflitos no campo desde 1985',
+                content: 'O relatório de 2023 da CPT revela um total de 2.203 conflitos, afetando mais de 950 mil pessoas. A violência, a grilagem e as disputas por terra, impulsionadas pela expansão do agronegócio e pela insegurança jurídica, atingem violentamente indígenas, quilombolas e sem-terra.',
+            },
+            {
+                img: 'images/terra-da-gente.jpg',
+                date: '2024-04-15',
+                title: 'Lançamento do Programa Terra da Gente',
+                subtitle: 'Governo Federal anuncia novo programa para acelerar a Reforma Agrária, com o objetivo de assentar 295 mil famílias até 2026',
+                content: 'Com a criação de "prateleiras de terras" disponíveis (terras públicas, de bancos, de devedores da União, etc.), o governo busca diversificar as formas de obtenção de áreas para a reforma agrária. O programa visa atender a uma demanda histórica de movimentos sociais e inclui a regularização de territórios quilombolas.',
+            },
+            {
+                img: 'images/titulacao-quilombola.jpg',
+                date: '2024-12-26',
+                title: 'Avanço na Titulação de Terras Quilombolas',
+                subtitle: 'Governo Federal encerra o ano com um número recorde de decretos de regularização de territórios quilombolas, mas o desafio da titulação definitiva permanece',
+                content: 'Ao longo de 2024, o governo assinou 31 decretos que beneficiam milhares de famílias quilombolas em todo o país. Apesar de representar um avanço significativo após anos de paralisia, o número de territórios titulados ainda é ínfimo perto da demanda total, e as comunidades seguem enfrentando a lentidão do processo e a violência em seus territórios.',
+            },
+            {
+                img: 'images/violencia-campo-2025.jpg',
+                date: '2025-01-01',
+                title: 'Persistência da Violência e Disputas Territoriais',
+                subtitle: 'O ano se inicia com a continuidade das tensões no campo, com a bancada ruralista pressionando por retrocessos na legislação ambiental e fundiária',
+                content: 'O cenário para o futuro próximo permanece desafiador. A luta pela terra no Brasil continua sendo um embate entre diferentes visões de mundo: de um lado, o agronegócio e a concentração de poder; de outro, os movimentos sociais, indígenas e quilombolas, que defendem a reforma agrária, a justiça social e a preservação ambiental como caminhos para um país mais justo.',
+            }
+        ];
 
         // Utilitários
         const $ = sel => document.querySelector(sel);
@@ -622,6 +687,40 @@
 
         // função utilitária para inserir novos eventos dinamicamente (útil se quiser rodar via console)
         window.addEvent = function (ev) { events.push(ev); buildYearOptions(); applyFilters(); }
+
+        // ================= Festejos =================
+        const festejos = [
+            {
+                img: 'images/carnaval.jpg',
+                date: '1700-02-01',
+                title: 'Carnaval no Brasil Colonial',
+                subtitle: 'Festejos populares',
+                content: 'Manifestações culturais trazidas de Portugal, com influência africana.'
+            },
+                        {
+                img: 'images/carnaval.jpg',
+                date: '1700-02-01',
+                title: 'Carnaval no Brasil Colonial',
+                subtitle: 'Festejos populares',
+                content: 'Manifestações culturais trazidas de Portugal, com influência africana.'
+            }
+        ];
+
+        const festejosContainer = document.getElementById('festejos');
+
+        festejos.forEach(ev => {
+            const card = document.createElement('div');
+            card.className = 'festejo-card';
+            card.innerHTML = `
+    <img src="${ev.img}" alt="${ev.title}">
+    <div>
+      <h3>${ev.title}</h3>
+      <small>${ev.date} – ${ev.subtitle}</small>
+      <p>${ev.content}</p>
+    </div>
+  `;
+            festejosContainer.appendChild(card);
+        });
 
     </script>
 </body>
