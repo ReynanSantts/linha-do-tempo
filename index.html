@@ -259,20 +259,20 @@
         .festejo-card h3 {
             margin: 0 0 8px;
             font-size: 1rem;
-            color: #222;
+            color: #ffffff;
         }
 
         .festejo-card small {
             display: block;
             margin-bottom: 10px;
-            color: #666;
+            color: #ffffff;
             font-size: 0.9rem;
         }
 
         .festejo-card p {
             font-size: 0.95rem;
             line-height: 1.4;
-            color: #444;
+            color: #ffffff;
         }
 
         @media (max-width:640px) {
@@ -320,7 +320,7 @@
     <div class="container">
         <header>
             <div>
-                <h1>Linha do Tempo</h1>
+                <h1>LINHA DO TEMPO</h1>
             </div>
 
             <div class="controls">
@@ -350,7 +350,7 @@
     </div>
 
     <div class="festas">
-        <h1>Festejos</h1>
+        <h1>RESISTÊNCIA EM FORMA DE FESTA</h1>
         <div id="festejos"></div>
     </div>
 
@@ -691,19 +691,55 @@
         // ================= Festejos =================
         const festejos = [
             {
-                img: 'images/carnaval.jpg',
-                date: '1700-02-01',
-                title: 'Carnaval no Brasil Colonial',
-                subtitle: 'Festejos populares',
-                content: 'Manifestações culturais trazidas de Portugal, com influência africana.'
-            },
-                        {
-                img: 'images/carnaval.jpg',
-                date: '1700-02-01',
-                title: 'Carnaval no Brasil Colonial',
-                subtitle: 'Festejos populares',
-                content: 'Manifestações culturais trazidas de Portugal, com influência africana.'
-            }
+            img: 'images/acampamento-terra-livre.jpg',
+            date: '2025-04-01', // Representa o mês de Abril
+            title: 'Acampamento Terra Livre (ATL)',
+            subtitle: 'A maior manifestação política indígena, unindo celebração e luta em Brasília.',
+            content: 'Realizado anualmente em abril, o ATL não é uma festa tradicional, mas a maior mobilização indígena do Brasil. Milhares de pessoas de centenas de etnias se reúnem em Brasília para lutar por seus direitos, principalmente a demarcação de terras. O acampamento é um espaço de luta, mas também de intensa celebração cultural, com cantos e rituais realizados em frente ao Congresso Nacional, sendo a resistência em sua forma mais explícita.',
+        },
+        {
+            img: 'images/bembe-do-mercado.jpg',
+            date: '2025-05-13', // Ocorre em Maio, próximo ao dia 13
+            title: 'Bembé do Mercado',
+            subtitle: 'O maior Candomblé de rua do mundo, um ato de afirmação da liberdade e da fé afro-brasileira.',
+            content: 'Nascido em 1889 em Santo Amaro (BA), um ano após a abolição, o Bembé celebra a liberdade e a coragem de afirmar a fé de matriz africana em público. Em uma época de intensa perseguição, realizar um Xirê (roda de louvação aos orixás) na rua foi uma afronta ao sistema opressor. Celebrá-lo hoje é manter viva a chama da resistência pelo direito de existir e cultuar os ancestrais.',
+        },
+        {
+            img: 
+            'images/jongo-sudeste2.jpg',
+            date: '2025-06-24', // Representa as festas juninas, uma data forte para o Jongo
+            title: 'Celebrações do Jongo',
+            subtitle: 'A resistência da "avó do samba", mantendo viva a comunicação codificada dos escravizados.',
+            content: 'O Jongo é uma dança ancestral praticada em quilombos do Sudeste, especialmente no Vale do Paraíba (RJ/SP). Suas letras, cheias de metáforas, eram usadas pelos escravizados para se comunicarem sem o entendimento dos senhores. Dançar o Jongo hoje é celebrar a inteligência que driblou a vigilância e garantiu a sobrevivência cultural de um povo.',
+        },
+        {
+            img: 'images/encontro-culturas-chapada.jpg',
+            date: '2025-07-15', // Ocorre na segunda quinzena de Julho
+            title: 'Encontro de Culturas Tradicionais da Chapada dos Veadeiros',
+            subtitle: 'A união de povos, liderada pelo Quilombo Kalunga, como plataforma de afirmação política.',
+            content: 'Este festival em Goiás é um poderoso ponto de encontro que tem como anfitrião o Quilombo Kalunga, o maior do Brasil. Para os Kalungas, descendentes de pessoas que fugiram da escravidão e viveram isolados por séculos, o evento é uma forma de mostrar ao mundo a força de sua cultura, sua história de refúgio e lutar pela proteção de seu território.',
+        },
+        {
+            img: 'images/kuarup-xingu.jpg',
+            date: '2025-08-01', // Ocorre entre Julho e Agosto
+            title: 'Kuarup',
+            subtitle: 'O grande ritual do Xingu que celebra a vida, a memória e a resiliência cultural em honra aos mortos.',
+            content: 'Realizado no Parque Indígena do Xingu (MT), o Kuarup é um complexo ritual funerário que se torna a celebração máxima da vida. Ao honrar seus mortos, os povos do Alto Xingu reafirmam seus laços, cosmologias e a transmissão da memória. Em um contexto de luto constante, o Kuarup é uma demonstração de força e resiliência, afirmando que sua cultura segue viva.',
+        },
+        {
+            img: 'images/congado-minas-gerais.jpg',
+            date: '2025-10-01', // Ocorre em Outubro
+            title: 'Festa de N. S. do Rosário e Congado',
+            subtitle: 'A celebração da realeza africana e da organização negra através do sincretismo religioso.',
+            content: 'As Irmandades de Nossa Senhora do Rosário dos Homens Pretos eram espaços de organização e ajuda mútua para os negros escravizados. Através do Congado, que recria a coroação de um Rei do Congo, eles mantiveram vivas suas tradições e memórias da realeza africana. A festa, forte em Minas Gerais, é a celebração da nobreza e organização política negra que resistiu.',
+        },
+        {
+            img: 'images/jogos-povos-indigenas.jpg',
+            date: '2025-11-01', // As datas são variáveis, aqui representando o segundo semestre
+            title: 'Jogos dos Povos Indígenas',
+            subtitle: 'A celebração do orgulho, da diversidade e das habilidades tradicionais contra o apagamento cultural.',
+            content: 'Com edições em locais variados, os Jogos são uma grande celebração da identidade indígena. Práticas como arco e flecha, zarabatana e corrida de tora são a celebração de habilidades essenciais à vida na floresta. O evento promove a união entre etnias e combate o preconceito, mostrando ao Brasil a força de suas culturas. As datas e locais mudam a cada edição.',
+        },
         ];
 
         const festejosContainer = document.getElementById('festejos');
@@ -714,7 +750,7 @@
             card.innerHTML = `
     <img src="${ev.img}" alt="${ev.title}">
     <div>
-      <h3>${ev.title}</h3>
+      <h2>${ev.title}</h2>
       <small>${ev.date} – ${ev.subtitle}</small>
       <p>${ev.content}</p>
     </div>
