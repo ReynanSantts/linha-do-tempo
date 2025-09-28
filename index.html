@@ -338,18 +338,17 @@
                 font-size: 18px;
             }
 
-            .timeline{
+            .timeline {
                 display: flex;
                 align-items: center;
                 text-align: center;
                 justify-content: center;
                 width: auto;
-                border: none;
             }
 
             .timeline .dot {
                 display: none;
-                
+
             }
 
             .timeline::before {
@@ -357,10 +356,10 @@
             }
 
             .events {
-                margin-right: 10rem;    
+                margin-right: 11rem;
             }
 
-            .event .date{
+            .event .date {
                 min-width: 70px;
             }
 
@@ -413,9 +412,7 @@
 
         /* 🔥 MOBILE MÉDIO - 400 a 700px */
         @media (min-width: 400px) and (max-width: 700px) {
-            body {
-                padding: 25px 20px;
-            }
+
 
             header {
                 flex-direction: column;
@@ -424,15 +421,50 @@
                 text-align: center;
             }
 
+            .timeline .dot {
+                display: none;
+
+            }
+
+            .timeline::before {
+                display: none;
+            }
+
+            .events {
+                margin-right: 10rem;
+            }
+
+            .event .date {
+                min-width: 70px;
+            }
+
+            .card {
+                flex-direction: column;
+                width: 20rem;
+                height: auto;
+            }
+
             h1 {
                 font-size: 20px;
             }
 
+            .festas{
+                display: flex;
+                flex-direction: column;
+                margin-left: -1rem;
+            }
+
+            .festas h1 {
+                text-align: center;
+                margin-left: 1rem;
+            }
+
             #festejos {
-                display: grid;
+                display: flex;
                 grid-template-columns: 1fr;
                 gap: 20px;
                 justify-items: center;
+                margin-right: 10rem;
             }
 
             .festejo-card {
