@@ -151,6 +151,25 @@
             margin-bottom: 1.5rem;
         }
 
+        .horizontal .events::-webkit-scrollbar {
+            height: 8px !important;
+        }
+
+        .horizontal .events::-webkit-scrollbar-thumb {
+            background: linear-gradient(90deg, #8B4513, #A0522D) !important;
+            border-radius: 6px !important;
+            border: 2px solid #3c291a !important;
+        }
+
+        .horizontal .events::-webkit-scrollbar-track {
+            background: #3c291a !important;
+            border-radius: 6px !important;
+        }
+
+        .horizontal .events::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(90deg, #A0522D, #CD853F) !important;
+        }
+
         /* Modal */
         .modal {
             position: fixed;
@@ -213,72 +232,143 @@
         }
 
         /* ================== FESTEJOS ================== */
+        /* Container principal */
         .festas {
-            margin: 40px 0;
             padding: 20px;
-            border-radius: 12px;
+            width: 100%;
         }
 
         .festas h1 {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            font-size: 24px;
             color: #ffffff;
-            font-size: 2rem;
-            font-weight: bold;
         }
 
+        /* Container das festas - Grid para desktop */
         #festejos {
-            display: flex;
-            flex-direction: row;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            max-width: 100%;
-            padding-bottom: 8px;
+            padding: 10px 20px;
         }
 
+        /* Card das festas */
         .festejo-card {
             background: #180900;
             border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-
-        .festejo-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            height: auto;
+            display: flex;
+            flex-direction: column;
         }
 
         .festejo-card img {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
-            display: block;
-        }
-
-        .festejo-card div {
-            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
         }
 
         .festejo-card h3 {
-            margin: 0 0 8px;
-            font-size: 1rem;
+            font-size: 18px;
+            margin-bottom: 8px;
             color: #ffffff;
         }
 
         .festejo-card small {
+            font-size: 13px;
+            color: #ffffff;
             display: block;
             margin-bottom: 10px;
-            color: #ffffff;
-            font-size: 0.9rem;
         }
 
         .festejo-card p {
-            font-size: 0.95rem;
-            line-height: 1.4;
+            font-size: 14px;
             color: #ffffff;
+            line-height: 1.5;
+            flex-grow: 1;
         }
+
+        /* ================== FESTEJOS HORIZONTAL - PC ================== */
+
+        .festas-horizontal {
+            flex-direction: row;
+            gap: 30px !important;
+            padding: 20px !important;
+            align-items: flex-start !important;
+        }
+
+        .festas-horizontal h1 {
+            text-align: center !important;
+            margin-bottom: 25px !important;
+            font-size: 26px !important;
+        }
+
+        .festejos-horizontal {
+            display: flex !important;
+            gap: 25px !important;
+            padding: 15px 20px !important;
+            overflow-x: auto !important;
+        }
+
+        .festejos-horizontal .festejo-card {
+            flex: 0 0 400px !important;
+            min-width: 400px !important;
+            max-width: 400px !important;
+            height: 38rem !important;
+            padding: 25px !important;
+        }
+
+        .festejos-horizontal .festejo-card img {
+            height: 200px !important;
+            margin-bottom: 15px !important;
+        }
+
+        .festejos-horizontal .festejo-card h3 {
+            font-size: 20px !important;
+            margin-bottom: 10px !important;
+        }
+
+        .festejos-horizontal .festejo-card small {
+            font-size: 14px !important;
+            margin-bottom: 12px !important;
+        }
+
+        .festejos-horizontal .festejo-card p {
+            font-size: 15px !important;
+            line-height: 1.6 !important;
+        }
+
+        .festejos-horizontal .festejo-card {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3) !important;
+            transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+        }
+
+        .festejos-horizontal .festejo-card:hover {
+            transform: translateY(-8px) scale(1.02) !important;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        .festejos-horizontal::-webkit-scrollbar {
+            height: 6px !important;
+        }
+
+        .festejos-horizontal::-webkit-scrollbar-thumb {
+            background: #8B4513 !important;
+            border-radius: 4px !important;
+        }
+
+        .festejos-horizontal::-webkit-scrollbar-track {
+            background: #3c291a !important;
+            border-radius: 4px !important;
+        }
+
+        .festejos-horizontal::-webkit-scrollbar-thumb:hover {
+            background: #A0522D !important;
+        }
+
 
         @media (max-width:700px) {
             header {
@@ -327,6 +417,7 @@
 
         /* MOBILE PEQUENO - 0 a 399px */
         @media (max-width: 399px) {
+
             header {
                 flex-direction: column;
                 align-items: center;
@@ -338,17 +429,27 @@
                 font-size: 18px;
             }
 
+            .timeline.horizontal {
+                align-items: center;
+                text-align: center;
+                justify-content: center;
+                display: block;
+            }
+
+            .horizontal .card {
+                height: auto;
+                width: auto;
+            }
+
             .timeline {
                 display: flex;
                 align-items: center;
                 text-align: center;
                 justify-content: center;
-                width: auto;
             }
 
             .timeline .dot {
                 display: none;
-
             }
 
             .timeline::before {
@@ -360,6 +461,7 @@
             }
 
             .event .date {
+                align-items: center;
                 min-width: 70px;
             }
 
@@ -367,28 +469,6 @@
                 flex-direction: column;
                 width: 15rem;
                 height: auto;
-            }
-
-            #festejos {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 20px;
-            }
-
-            .festejo-card {
-                width: 95vw;
-                max-width: 100%;
-            }
-
-            .festejo-card img {
-                height: 120px;
-            }
-
-            .festejo-card div {
-                padding: 12px;
-                text-align: center;
             }
 
             .event {
@@ -408,11 +488,104 @@
                 width: 100%;
                 max-width: 100%;
             }
+
+            /* === FESTEJOS VERTICAL (default para mobile pequeno) === */
+            .festas {
+                padding: 10px 8px;
+            }
+
+            .festas h1 {
+                font-size: 18px;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+
+            .festejos-vertical {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 12px;
+                padding: 8px 5px;
+            }
+
+            .festejo-card {
+                align-items: center;
+                text-align: center;
+                background: #180900;
+                border-radius: 40px;
+                height: 27rem;
+            }
+
+            .festejo-card img {
+                height: 120px;
+                width: 100%;
+                object-fit: cover;
+                border-radius: 6px;
+                margin-bottom: 10px;
+            }
+
+            .festejo-card h3 {
+                font-size: 15px;
+                margin-bottom: 6px;
+            }
+
+            .festejo-card small {
+                font-size: 10px;
+                display: block;
+                margin-bottom: 8px;
+            }
+
+            .festejo-card p {
+                font-size: 12px;
+                line-height: 1.4;
+            }
+
+
+            /* === FESTEJOS HORIZONTAL === */
+            .festejos-horizontal {
+                flex-direction: row !important;
+                display: flex !important;
+                overflow-x: auto !important;
+                gap: 12px !important;
+                padding: 5px 3px !important;
+                scroll-snap-type: x mandatory !important;
+                -webkit-overflow-scrolling: touch !important;
+            }
+
+            .festejos-horizontal .festejo-card {
+                flex: 0 0 260px !important;
+                min-width: 260px !important;
+                scroll-snap-align: start !important;
+                height: 380px !important;
+                overflow-y: auto !important;
+                padding: 12px !important;
+            }
+
+            .festejos-horizontal .festejo-card img {
+                height: 100px !important;
+            }
+
+            .festejos-horizontal .festejo-card h3 {
+                font-size: 15px !important;
+                line-height: 1.2 !important;
+                margin-bottom: 6px !important;
+            }
+
+            .festejos-horizontal .festejo-card small {
+                font-size: 11px !important;
+                line-height: 1.2 !important;
+                margin-bottom: 8px !important;
+                display: block !important;
+            }
+
+            .festejos-horizontal .festejo-card p {
+                font-size: 11px !important;
+                line-height: 1.3 !important;
+                margin: 0 !important;
+            }
         }
 
         /* MOBILE MÉDIO - 400 a 700px */
         @media (min-width: 400px) and (max-width: 700px) {
-
 
             header {
                 flex-direction: column;
@@ -428,6 +601,18 @@
 
             .timeline::before {
                 display: none;
+            }
+
+            .timeline.horizontal .events {
+                gap: 2.5rem;
+            }
+
+            .horizontal .event .date {
+                text-align: center;
+            }
+
+            .horizontal .festas {
+                display: block;
             }
 
             .events {
@@ -448,39 +633,6 @@
                 font-size: 20px;
             }
 
-            .festas {
-                display: flex;
-                flex-direction: column;
-                margin-left: -1rem;
-            }
-
-            .festas h1 {
-                text-align: center;
-                margin-left: 1rem;
-            }
-
-            #festejos {
-                display: flex;
-                grid-template-columns: 1fr;
-                gap: 20px;
-                justify-items: center;
-                margin-right: 10rem;
-            }
-
-            .festejo-card {
-                width: 90%;
-                max-width: 380px;
-            }
-
-            .festejo-card img {
-                height: 140px;
-            }
-
-            .festejo-card div {
-                padding: 15px;
-                text-align: center;
-            }
-
             .event {
                 grid-template-columns: 60px 1fr;
                 gap: 15px;
@@ -493,12 +645,161 @@
                 flex-wrap: wrap;
             }
 
-            input[type=text],
-            select {
-                width: 48%;
-                min-width: 150px;
+            /* === FESTAS VERTICAL === */
+            .festas {
+                padding: 20px 5px;
+                margin: 0;
+                width: 100vw;
+                position: relative;
+                left: 50%;
+                right: 50%;
+                margin-left: -50vw;
+                margin-right: -50vw;
+            }
+
+            .festas h1 {
+                font-size: 22px;
+                margin-bottom: 25px;
+                text-align: center;
+            }
+
+            #festejos {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 10px 15px;
+            }
+
+            .festejo-card {
+                background: #180900;
+                border-radius: 12px;
+                padding: 20px;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                max-width: 100%;
+                margin: 0 auto;
+            }
+
+            .festejo-card img {
+                width: 100%;
+                height: 160px;
+                object-fit: cover;
+                border-radius: 8px;
+                margin-bottom: 15px;
+            }
+
+            .festejo-card h3 {
+                font-size: 18px;
+                margin-bottom: 8px;
+                color: #ffffff;
+            }
+
+            .festejo-card small {
+                font-size: 14px;
+                color: #ffffff;
+                display: block;
+                margin-bottom: 12px;
+            }
+
+            .festejo-card p {
+                font-size: 14px;
+                color: #ffffff;
+                line-height: 1.5;
+                flex-grow: 1;
+            }
+
+            .festejo-card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .festejo-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            }
+
+            /* === FESTAS HORIZONTAL === */
+            .festas-horizontal {
+                gap: 20px !important;
+                padding: 15px 10px !important;
+                align-items: flex-start !important;
+                overflow-x: visible !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            /* === FESTEJOS HORIZONTAL === */
+            .festejos-horizontal {
+                flex-direction: row !important;
+                display: flex !important;
+                gap: 18px !important;
+                padding: 8px 5px !important;
+                align-items: stretch !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .festejos-horizontal .festejo-card {
+                flex: 0 0 320px !important;
+                min-width: 320px !important;
+                scroll-snap-align: start !important;
+                height: 500px !important;
+                overflow-y: auto !important;
+                padding: 18px !important;
+                box-sizing: border-box !important;
+            }
+
+            .festejos-horizontal .festejo-card img {
+                height: 140px !important;
+                width: 100% !important;
+                object-fit: cover !important;
+                border-radius: 8px !important;
+                margin-bottom: 12px !important;
+            }
+
+            .festejos-horizontal .festejo-card h3 {
+                font-size: 18px !important;
+                line-height: 1.3 !important;
+                margin-bottom: 8px !important;
+                color: #ffffff !important;
+            }
+
+            .festejos-horizontal .festejo-card small {
+                font-size: 14px !important;
+                line-height: 1.3 !important;
+                margin-bottom: 12px !important;
+                display: block !important;
+                color: #ffffff !important;
+            }
+
+            .festejos-horizontal .festejo-card p {
+                font-size: 14px !important;
+                line-height: 1.5 !important;
+                margin: 0 !important;
+                color: #ffffff !important;
+                flex-grow: 1 !important;
+            }
+
+            /* Efeitos visuais */
+            .festejos-horizontal .festejo-card {
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+                transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+                border-radius: 12px !important;
+            }
+
+            .festejos-horizontal .festejo-card:hover {
+                transform: translateY(-5px) !important;
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4) !important;
             }
         }
+
+        input[type=text],
+        select {
+            width: 48%;
+            min-width: 150px;
+        }
+
+
 
         .card {
             background-color: #180900;
@@ -540,6 +841,7 @@
                 <select id="yearFilter">
                     <option value="all">Todos os anos</option>
                 </select>
+
             </div>
         </header>
 
@@ -557,9 +859,11 @@
         </div>
     </div>
 
-    <div class="festas">
+    <div class="festas" id="festas">
         <h1>Resistência em forma de festa</h1>
-        <div id="festejos"></div>
+        <div id="festejos" class="festejos-vertical">
+            <!-- cards serão inseridos aqui -->
+        </div>
     </div>
 
 
@@ -948,6 +1252,16 @@
         `;
                 festejosEl.appendChild(card);
             });
+
+            const isHorizontal = viewSelect.value === 'horizontal';
+            if (isHorizontal) {
+                festejosContainer.className = 'festejos-horizontal';
+                setTimeout(() => {
+                    enableHorizontalScrollFestejos();
+                }, 100);
+            } else {
+                festejosContainer.className = 'festejos-vertical';
+            }
         }
 
         // controles
@@ -962,14 +1276,32 @@
 
         viewSelect.addEventListener('change', () => {
             const horizontal = viewSelect.value === 'horizontal';
+            const festasSection = document.getElementById('festas');
 
             // Timeline
-            if (horizontal) timeline.classList.add('horizontal');
-            else timeline.classList.remove('horizontal');
+            if (horizontal) {
+                timeline.classList.add('horizontal');
+                // ⭐ O enableHorizontalScroll(eventsEl) é chamado no render()
+            } else {
+                timeline.classList.remove('horizontal');
+            }
+
+            // Festas
+            if (horizontal) {
+                festasSection.className = 'festas-horizontal';
+                festejosContainer.className = 'festejos-horizontal';
+
+                // ⭐ ATIVA SCROLL DOS FESTEJOS (igual à timeline)
+                setTimeout(() => {
+                    enableHorizontalScrollFestejos();
+                }, 100);
+
+            } else {
+                festasSection.className = 'festas';
+                festejosContainer.className = 'festejos-vertical';
+            }
 
             applyFilters();
-            // Festejos
-            renderFestejos(horizontal);
         });
 
         // modal
@@ -1038,8 +1370,8 @@
 
         const festejosContainer = document.getElementById('festejos');
 
-        function renderFestejos(horizontal = false) {
-            festejosContainer.innerHTML = ''; // limpa o container
+        function renderFestejos() {
+            festejosContainer.innerHTML = '';
             festejos.forEach(ev => {
                 const card = document.createElement('div');
                 card.className = 'festejo-card';
@@ -1054,33 +1386,14 @@
                 festejosContainer.appendChild(card);
             });
 
-            // Aplica layout    
-            if (horizontal) {
-                festejosContainer.style.display = 'flex';
-                festejosContainer.style.flexDirection = 'row';
-                festejosContainer.style.overflowX = 'auto';
-                festejosContainer.style.gap = '20px';
-
-                enableHorizontalScroll(festejosContainer);
-
-                // Define largura fixa dos cards
-                festejosContainer.querySelectorAll('.festejo-card').forEach(card => {
-                    card.style.flex = '0 0 400px';
-                });
+            // ⭐ Aplica o layout baseado no select atual
+            const isHorizontal = viewSelect.value === 'horizontal';
+            if (isHorizontal) {
+                festejosContainer.className = 'festejos-horizontal';
             } else {
-                festejosContainer.style.display = 'grid';
-                festejosContainer.style.gridTemplateColumns = 'repeat(2, 1fr)';
-                festejosContainer.style.gap = '15px';
-                festejosContainer.style.overflowX = 'visible';
-
-                // Reset para não afetar a versão vertical
-                festejosContainer.querySelectorAll('.festejo-card').forEach(card => {
-                    card.style.flex = '';
-                    card.style.maxWidth = '';
-                });
+                festejosContainer.className = 'festejos-vertical';
             }
         }
-
         // Inicializa vertical por padrão
         renderFestejos(false);
 
@@ -1092,6 +1405,16 @@
 
                 // Rola horizontalmente baseado no deltaY (scroll vertical)
                 element.scrollLeft += e.deltaY * 2; // Ajuste a velocidade aqui
+            }, { passive: false });
+        }
+
+        function enableHorizontalScrollFestejos() {
+            const festejosHorizontal = document.querySelector('.festejos-horizontal');
+            if (!festejosHorizontal) return;
+
+            festejosHorizontal.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                festejosHorizontal.scrollLeft += e.deltaY * 2;
             }, { passive: false });
         }
     </script>
